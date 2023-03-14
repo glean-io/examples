@@ -1,0 +1,31 @@
+glean: '1.0'
+type: saved_view
+model: ../models/user_month_retention.yml
+name: Retention example
+hidden:
+- month_number
+data:
+  x:
+    columnId: month_number
+  y:
+    columnId: avg_unbounded_active
+  breakout:
+    columnId: signup_year
+    groups:
+    - index: 0
+      key: '2013'
+    - index: 1
+      key: '2015'
+    - index: 2
+      key: '2020'
+  filters:
+  - columnId: month_number
+    range:
+    - 0
+    - 42
+visualization:
+  chartType: line
+  showOther: true
+  stack: unstack
+  showAxisLabels: true
+  legend: top

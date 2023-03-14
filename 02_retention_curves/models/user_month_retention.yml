@@ -1,0 +1,95 @@
+glean: '1.0'
+type: model
+name: 02 Retention
+source:
+  connectionName: bigquery-template
+  sql: |+
+    -- retention query, see glean examples docs on github gleannyc/examples/02_retention_curves
+    with active_months as (
+      select
+        distinct user_id
+        , timestamp_trunc(timestamp, month) as month
+      from`quickstart.webapp_events_subset`
+    ),
+    users as (
+      select
+        user_id
+        , min(timestamp_trunc(timestamp, month)) as first_month
+        , max(timestamp_trunc(timestamp, month)) as last_month
+      from `quickstart.webapp_events_subset`
+      group BY user_id
+    )
+    select
+      u.user_id
+      , m.month
+      , first_month as cohort_month
+      , substr(cast(first_month as string),1,7) as cohort_month_str
+      , substr(cast(first_month as string),1,4) as cohort_year_str
+      , date_diff(DATE(m.month), DATE(u.first_month), MONTH) as month_number
+    -- could add cohort
+    --  , experiment_cohort as experiment
+      , if(m.month <= u.last_month, 1.0, 0.0) as unbounded_active
+      , if(a.month IS NOT NULL, 1.0, 0.0) as active
+    from users as u
+      cross join `quickstart.webapp_all_months` as m
+      left join active_months as a
+        on a.user_id = u.user_id and a.month = m.month
+      where m.month >= u.first_month
+
+cols:
+  - id: month
+    type: datetime
+    physicalName: month
+    name: time since signup
+    primaryDate: true
+    aggregationOptions:
+      minGranularity: month
+      maxGranularity: month
+  - id: cohort
+    type: datetime
+    physicalName: cohort_month
+    name: Cohort
+    primaryDate: false
+    aggregationOptions:
+      minGranularity: second
+      maxGranularity: year
+  - id: user_id
+    type: attribute
+    physicalName: user_id
+    name: user_id
+  - id: month_number
+    type: attribute
+    physicalName: month_number
+    name: months since signup
+  - id: cohort_month_str
+    type: attribute
+    physicalName: cohort_month_str
+    name: signup month
+  - id: signup_year
+    type: attribute
+    physicalName: cohort_year_str
+    name: signup year
+  - id: row_count
+    type: metric
+    name: __analytic rows
+    aggregate: row_count
+  - id: avg_active
+    type: metric
+    name: Active Retention
+    formattingOptions:
+      fixedDecimals: 1
+      formatAsPercent: true
+    aggregate: avg
+    physicalName: active
+  - id: avg_unbounded_active
+    type: metric
+    name: Unbounded Retention
+    formattingOptions:
+      fixedDecimals: 1
+      formatAsPercent: true
+    aggregate: avg
+    physicalName: unbounded_active
+  - id: active_users
+    type: metric
+    name: Active Users
+    sql: count(distinct if(active=1, user_id, null))

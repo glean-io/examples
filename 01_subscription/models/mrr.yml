@@ -1,0 +1,94 @@
+glean: '1.0'
+type: model
+name: mrr
+source:
+  connectionName: bigquery-template
+  physicalName: monthly_recurring_revenue
+  schema: quickstart
+cols:
+  - id: date_month
+    type: datetime
+    physicalName: date_month
+    name: date_month
+    primaryDate: true
+  - id: first_active_month
+    type: datetime
+    physicalName: first_active_month
+    name: first_active_month
+    primaryDate: false
+  - id: last_active_month
+    type: datetime
+    physicalName: last_active_month
+    name: last_active_month
+    primaryDate: false
+  - id: is_active
+    type: attribute
+    physicalName: is_active
+    name: is_active
+  - id: is_first_month
+    type: attribute
+    physicalName: is_first_month
+    name: is_first_month
+  - id: is_last_month
+    type: attribute
+    physicalName: is_last_month
+    name: is_last_month
+  - id: change_category
+    type: attribute
+    physicalName: change_category
+    name: Change Category
+  - id: renewal_amount
+    type: attribute
+    physicalName: renewal_amount
+    name: renewal_amount
+  - id: customer_id
+    type: attribute
+    physicalName: customer_id
+    name: customer_id
+  - id: transactions
+    type: metric
+    name: Transactions
+    aggregate: row_count
+  - id: mrr_change
+    type: metric
+    name: MRR change
+    formattingOptions:
+      fixedDecimals: 0
+      formatAsDollars: true
+    aggregate: sum
+    physicalName: mrr_change
+  - id: customer_change
+    type: metric
+    name: Customer Change
+    sql: "sum(case \nwhen change_category in('new', 'reactivation') then 1\nwhen change_category\
+      \ in('churn') then -1\nend)"
+  - id: revenue
+    type: metric
+    name: Revenue
+    description: Revenue
+    formattingOptions:
+      fixedDecimals: 0
+      formatAsDollars: true
+    aggregate: sum
+    physicalName: renewal_amount
+  - id: customers
+    type: metric
+    name: customers
+    aggregate: count_distinct
+    physicalName: customer_id
+  - id: arpu
+    type: metric
+    name: ARPU
+    formattingOptions:
+      fixedDecimals: 0
+      formatAsDollars: true
+    aggregate: avg
+    physicalName: mrr
+  - id: mrr
+    type: metric
+    name: MRR
+    formattingOptions:
+      fixedDecimals: 0
+      formatAsDollars: true
+    aggregate: sum
+    physicalName: mrr
