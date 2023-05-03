@@ -1,41 +1,38 @@
-glean: '1.0'
+glean: "1.0"
 type: saved_view
-model: ../models/user_month_retention.yml
+grn: sv:07fdf78d-0f43-3320-b3dc-612a57fdfedc
+model: m:b9eb3293-7875-3d23-b5b6-49a3cfaf4faf
 name: Active Users by Yearly Cohort
 data:
   x:
-    columnId: signup_year
+    columnId: cohort
+    granularity: year
   y:
     columnId: active_users
   breakout:
-    columnId: month_number
+    columnId: months_since_signup
     groups:
-    - key: 0
-      index: 0
-    - key: 1
-      index: 1
-    - key: 2
-      index: 2
-    - key: 3
-      index: 3
-    - key: 4
-      index: 4
-    - key: 5
-      index: 5
-    - key: 6
-      index: 6
-    - key: 7
-      index: 7
-    - key: 8
-      index: 8
-    - key: 9
-      index: 9
+      - key: 0
+      - key: 1
+      - key: 2
+      - key: 3
+      - key: 4
+      - key: 5
+      - key: 6
+      - key: 7
+      - key: 8
+      - key: 9
+    showOther: true
+  filters: []
+  sort:
+    - columnId: months_since_signup
+      order: asc
 visualization:
   chartType: pivot
-  showOther: true
   showAxisLabels: true
   legend: top
+  showLegendTitle: false
   tableCellFormatting:
-  - color: green
-    showPercentage: true
-    calculation: rowPercentMax
+    - color: green
+      showPercentage: true
+      calculation: rowPercentMax

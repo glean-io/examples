@@ -1,31 +1,35 @@
-glean: '1.0'
+glean: "1.0"
 type: saved_view
-model: ../models/user_month_retention.yml
+grn: sv:c5120fe8-b0a0-36e3-bc56-a795c081722e
+model: m:b9eb3293-7875-3d23-b5b6-49a3cfaf4faf
 name: Retention example
-hidden:
-- month_number
 data:
   x:
-    columnId: month_number
+    columnId: months_since_signup
   y:
-    columnId: avg_unbounded_active
+    columnId: unbounded_retention
   breakout:
-    columnId: signup_year
+    columnId: cohort
     groups:
-    - index: 0
-      key: '2013'
-    - index: 1
-      key: '2015'
-    - index: 2
-      key: '2020'
+      - key: 2013-01-01
+      - key: 2015-01-01
+      - key: 2020-01-01
+    showOther: true
+    granularity: year
   filters:
-  - columnId: month_number
-    range:
-    - 0
-    - 42
+    - columnId: months_since_signup
+      range:
+        - 0
+        - 42
 visualization:
   chartType: line
-  showOther: true
   stack: unstack
   showAxisLabels: true
   legend: top
+  showLegendTitle: false
+attributeTray:
+  attributeTiles:
+    - columnId: cohort
+      granularity: year
+    - columnId: months_since_signup
+      hidden: true
