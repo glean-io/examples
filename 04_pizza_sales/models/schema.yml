@@ -1,0 +1,74 @@
+version: 2
+
+models:
+  - name: sales
+    description: a deescription
+    columns:
+      - name: Customer ID
+        description: unique ID for a customer
+      - name: Pizza Shape
+        description: square or round pizza
+      - name: Pizza Size
+        description: pizza size: small, medium or large
+      - name: Pizza Type
+        description: the type of pizza
+      - name: Payment Method
+        description: credit or cash
+      - name: Delivery
+        description: boolean, is it delivery
+      - name: Type
+        description: the type
+      - name: Order ID
+        description: order id
+        meta:
+          glean:
+            aggregationOptions:
+              binsEnabled: false
+      - name: Line Number
+        description: which line number
+        meta:
+          glean:
+            aggregationOptions:
+              defaultBinWidth: 1
+              binsEnabled: false
+      - name: Price
+        description: price in USD per pizza
+        meta:
+          glean:
+            aggregationOptions:
+              defaultBinWidth: 5
+              binsEnabled: true
+      - name: Order Value
+        description: order value - for total
+        meta:
+          glean:
+            aggregationOptions:
+              defaultBinWidth: 0.5
+              binsEnabled: false
+      - name: Quantity
+        description: number of pizzas
+        meta:
+          glean:
+            aggregationOptions:
+              defaultBinWidth: 1
+              binsEnabled: false
+
+    config:
+      meta:
+        glean:
+          glean: "1.0"
+          source:
+            connectionName: Uploads
+            physicalName: sales.parquet
+          cols:
+            - id: timestamp
+              type: datetime
+              physicalName: Timestamp
+              primaryDate: true
+              aggregationOptions:
+                minGranularity: second
+                maxGranularity: year
+            - id: row_count
+              type: metric
+              name: Pizza Orders
+              aggregate: row_count
