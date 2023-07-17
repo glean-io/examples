@@ -19,4 +19,3 @@ models:
       preventUpdatesFromUI: false
       source:
         connectionName: Uploads
-        uploadsFileExtension: parquet

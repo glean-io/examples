@@ -1,4 +1,4 @@
-.PHONY: generate_data upload_data deploy_glean
+.PHONY: upload_data deploy_glean
 
 all: ./data/sales_data.parquet target/manifest.json upload_data deploy_glean
 
