@@ -16,6 +16,7 @@ models:
   +meta:
     glean-defaults:
       glean: "1.0"
+      preventUpdatesFromUI: false
       source:
         connectionName: Uploads
         uploadsFileExtension: parquet

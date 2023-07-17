@@ -1,19 +1,10 @@
-{{
-  config(
-    materialized = "external",
-    location = "./data/dbt/sales.parquet",
-    columns = [
-      {
-        "name": "Price",
-        "description": "the price per pizza"
-      },
-      {
-        "name": "Quantity",
-        "description": "the number of pizzas"
-      }
-    ]
-  )
-}}
-
-select *
+select 
+  hash("Order ID" || '_' || "Line Number") as "Line ID",
+  "Order ID",
+  "Line Number",
+  hash("Pizza Type" || "Pizza Shape" || "Pizza Size" ) as "Product ID",
+  "Quantity",
+  "Customer ID",
+  "Order Value",
+  "Timestamp"
 from "./data/sales_data.parquet"
