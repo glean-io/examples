@@ -4,7 +4,7 @@ models:
   - name: sales
     description: sales has a record for each customer, order, product combination
     columns:
-      - name: Line ID
+      - name: LineID
         description: unique value for each line
         tests:
           - unique
