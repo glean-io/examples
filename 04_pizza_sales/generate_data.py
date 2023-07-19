@@ -159,22 +159,22 @@ def generate_data(order_id, customer_id=None, timestamp=None, type=None):
 
         rows.append(
             {
-                "Order ID": order_id,
-                "Line Number": _,
-                "Timestamp": timestamp,
+                "order_id": order_id,
+                "line_number": _,
+                "timestamp": timestamp,
                 # generate uuid from the random number: https://stackoverflow.com/questions/41186895/how-to-generate-uuid-from-a-random-integer
-                "Customer ID": customer_id,
-                "Pizza Shape": pizza_shape,
-                "Pizza Size": pizza_size,
-                "Pizza Type": pizza_type,
-                "Pizza Toppings": get_toppings(pizza_type),
-                "Price": get_price(pizza_type, pizza_size, pizza_shape),
-                "Order Value": get_price(pizza_type, pizza_size, pizza_shape)
+                "customer_id": customer_id,
+                "pizza_shape": pizza_shape,
+                "pizza_size": pizza_size,
+                "pizza_type": pizza_type,
+                "pizza_toppings": get_toppings(pizza_type),
+                "price": get_price(pizza_type, pizza_size, pizza_shape),
+                "order_value": get_price(pizza_type, pizza_size, pizza_shape)
                 * float(quantity),
-                "Quantity": quantity,
-                "Payment Method": payment_method,
-                "Delivery": delivery,
-                "Type": type,
+                "quantity": quantity,
+                "payment_method": payment_method,
+                "delivery": delivery,
+                "type": type,
             }
         )
     return rows

@@ -1,0 +1,76 @@
+version: 2
+
+models:
+  - name: order_attribution
+    description: This model describes how each order is attributed to different marketing touchpoints.
+    columns:
+      - name: attribution_id
+        description: Unique ID for the attribution.
+      - name: order_id
+        description: Order ID, matches the order_id in the sales model.
+      - name: touchpoint_id
+        description: ID of the marketing touchpoint which led to the order.
+      - name: attribution_share
+        description: Proportional credit given to this touchpoint for the order.
+      - name: attribution_timestamp
+        description: The time when the attribution was recorded.
+      - name: attribution_model
+        description: The model used for attributing the order to the touchpoint.
+    config:
+      meta:
+        glean:
+          cols:
+            - id: row_count
+              type: metric
+              name: Order Attribution Records
+              aggregate: row_count
+
+  - name: marketing_touchpoints
+    description: This model describes each marketing touchpoint that leads to an order.
+    columns:
+      - name: touchpoint_id
+        description: Unique ID for the touchpoint.
+      - name: customer_id
+        description: The customer ID this touchpoint was exposed to.
+      - name: source
+        description: Source of the touchpoint, e.g., Google, Facebook, Email.
+      - name: medium
+        description: Medium of the touchpoint, e.g., cpc, organic, referral.
+      - name: campaign
+        description: Campaign ID the touchpoint belongs to.
+      - name: interaction_timestamp
+        description: The time when the customer interacted with the touchpoint.
+      - name: touchpoint_value
+        description: The value assigned to the touchpoint.
+    config:
+      meta:
+        glean:
+          cols:
+            - id: row_count
+              type: metric
+              name: Order Attribution Records
+              aggregate: row_count
+
+  - name: campaigns
+    description: This model provides details about each marketing campaign.
+    columns:
+      - name: campaign_id
+        description: Unique ID for the campaign.
+      - name: campaign_name
+        description: The name of the marketing campaign.
+      - name: campaign_type
+        description: Type of the campaign, e.g., Email, Social Media, Search Engine Marketing.
+      - name: start_date
+        description: Start date of the campaign.
+      - name: end_date
+        description: End date of the campaign.
+      - name: total_budget
+        description: The total budget for the campaign.
+    config:
+      meta:
+        glean:
+          cols:
+            - id: row_count
+              type: metric
+              name: Order Attribution Records
+              aggregate: row_count

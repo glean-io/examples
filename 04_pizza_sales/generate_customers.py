@@ -9,11 +9,11 @@ parquet_file_path = "./data/sales_data.parquet"
 df = pd.read_parquet(parquet_file_path)
 
 # Step 2: Extract the unique customer IDs
-customer_ids = df["Customer ID"].unique()
+customer_ids = df["customer_id"].unique()
 
 # Step 3: Create the customers table
 customers_table = pd.DataFrame(
-    columns=["Customer ID", "Name", "Address", "Phone Number"]
+    columns=["customer_id", "name", "address", "phone_number"]
 )
 
 # Step 4: Populate the customers table
@@ -26,10 +26,10 @@ for customer_id in customer_ids:
     # Step 5: Insert customer data into the customers table
     customers_table = customers_table.append(
         {
-            "Customer ID": customer_id,
-            "Name": name,
-            "Address": address,
-            "Phone Number": phone_number,
+            "customer_id": customer_id,
+            "name": name,
+            "address": address,
+            "phone_number": phone_number,
         },
         ignore_index=True,
     )

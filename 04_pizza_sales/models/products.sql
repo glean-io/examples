@@ -1,8 +1,8 @@
 select 
-  hash("Pizza Type" || "Pizza Shape" || "Pizza Size" ) as "Product ID",
-  "Pizza Size",
-  "Pizza Shape",
-  "Pizza Type",
+  hash("pizza_type" || "pizza_shape" || "pizza_size" ) as "product_id",
+  "pizza_size",
+  "pizza_shape",
+  "pizza_type",
   "Price"
 from "./data/sales_data.parquet"
 group by all

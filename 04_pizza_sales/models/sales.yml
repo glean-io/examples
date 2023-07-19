@@ -4,7 +4,7 @@ models:
   - name: sales
     description: sales has a record for each customer, order, product combination
     columns:
-      - name: LineID
+      - name: line_id
         description: unique value for each line
         tests:
           - unique
@@ -12,38 +12,38 @@ models:
         meta:
           glean:
             primaryKey: true
-      - name: Customer ID
+      - name: customer_id
         description: unique ID for a customer
-      - name: Order ID
+      - name: order_id
         description: order id
         meta:
           glean:
             aggregationOptions:
               binsEnabled: false
-      - name: Line Number
+      - name: line_number
         description: which line number; values from 1 to 5
         meta:
           glean:
             aggregationOptions:
               defaultBinWidth: 1
               binsEnabled: false
-      - name: Product ID
+      - name: product_id
         description: allows us to join to the products table
-      - name: Order Value
+      - name: order_value
         description: order value - this is just for this line
         meta:
           glean:
             aggregationOptions:
               defaultBinWidth: 0.5
               binsEnabled: false
-      - name: Quantity
+      - name: quantity
         description: number of pizzas
         meta:
           glean:
             aggregationOptions:
               defaultBinWidth: 1
               binsEnabled: false
-      - name: Timestamp
+      - name: timestamp
         description: the time the order was created
     config:
       meta:
@@ -57,18 +57,18 @@ models:
   - name: orders
     description: order information
     columns:
-      - name: Order ID
+      - name: order_id
         description: order id
         meta:
           glean:
             aggregationOptions:
               binsEnabled: false
             primaryKey: true
-      - name: Payment Method
+      - name: payment_method
         description: credit or cash
-      - name: Delivery
+      - name: delivery
         description: boolean, is it delivery
-      - name: Type
+      - name: type
         description: whether the order is a subscription order 
     config:
         meta:
@@ -82,16 +82,13 @@ models:
   - name: products
     description: order information
     columns:
-      - name: Product ID
+      - name: product_id
         description: the unique identifier of the product
-        meta:
-          glean:
-            primaryKey: true
-      - name: Pizza Size
+      - name: pizza_size
         description: pizza size; small, medium or large
-      - name: Pizza Type
+      - name: pizza_type
         description: the type of pizza
-      - name: Price
+      - name: price
         description: price in USD per pizza
         meta:
           glean:
@@ -111,20 +108,20 @@ models:
   - name: customers
     description: This table contains customer information.
     columns:
-      - name: Customer ID
+      - name: customer_id
         description: The unique identifier for the customer.
         tests:
           - unique
           - not_null
-      - name: Name
+      - name: name
         description: The name of the customer.
         tests:
           - not_null
-      - name: Address
+      - name: address
         description: The address of the customer.
         tests:
           - not_null
-      - name: Phone Number
+      - name: phone_number
         description: The phone number of the customer.
         tests:
           - not_null
@@ -136,4 +133,3 @@ models:
                 type: metric
                 name: Customer Count
                 aggregate: row_count
-
