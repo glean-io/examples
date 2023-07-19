@@ -84,6 +84,9 @@ models:
     columns:
       - name: product_id
         description: the unique identifier of the product
+        meta:
+          glean:
+            primaryKey: true
       - name: pizza_size
         description: pizza size; small, medium or large
       - name: pizza_type
@@ -113,6 +116,9 @@ models:
         tests:
           - unique
           - not_null
+        meta:
+          glean:
+            primaryKey: true
       - name: name
         description: The name of the customer.
         tests:
