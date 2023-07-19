@@ -9,6 +9,9 @@ models:
         tests:
           - unique
           - not_null
+        meta:
+          glean:
+            primaryKey: true
       - name: Customer ID
         description: unique ID for a customer
       - name: Order ID
@@ -103,3 +106,34 @@ models:
                 type: metric
                 name: Product Count
                 aggregate: row_count
+
+
+  - name: customers
+    description: This table contains customer information.
+    columns:
+      - name: Customer ID
+        description: The unique identifier for the customer.
+        tests:
+          - unique
+          - not_null
+      - name: Name
+        description: The name of the customer.
+        tests:
+          - not_null
+      - name: Address
+        description: The address of the customer.
+        tests:
+          - not_null
+      - name: Phone Number
+        description: The phone number of the customer.
+        tests:
+          - not_null
+    config:
+        meta:
+          glean:
+            cols:
+              - id: row_count
+                type: metric
+                name: Customer Count
+                aggregate: row_count
+

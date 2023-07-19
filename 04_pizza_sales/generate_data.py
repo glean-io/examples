@@ -182,7 +182,7 @@ def generate_data(order_id, customer_id=None, timestamp=None, type=None):
 
 # Generate the data
 data = []
-for order_id in range(63501):
+for order_id in range(6350):
     data.extend(generate_data(order_id, type="Single Order"))
 
 
@@ -200,7 +200,7 @@ def generate_sub_timestamp(month, year):
 
 
 # Generate data for subscription customers
-for customer_id in range(2321):
+for customer_id in range(232):
     # Each customer is a subscriber for between 3 months and 2 years
     num_months = randint(3, 24)
 
