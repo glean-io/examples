@@ -24,15 +24,23 @@ for customer_id in customer_ids:
     phone_number = fake.phone_number()
 
     # Step 5: Insert customer data into the customers table
-    customers_table = customers_table.append(
-        {
-            "customer_id": customer_id,
-            "name": name,
-            "address": address,
-            "phone_number": phone_number,
-        },
+    customers_table = pd.concat(
+        [
+            customers_table,
+            pd.DataFrame(
+                [
+                    {
+                        "customer_id": customer_id,
+                        "name": name,
+                        "address": address,
+                        "phone_number": phone_number,
+                    }
+                ]
+            ),
+        ],
         ignore_index=True,
     )
+
 
 # Step 6: Write the customers table to a Parquet file
 output_parquet_file_path = "./data/customers.parquet"

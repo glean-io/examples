@@ -19,14 +19,13 @@ models:
         description: The time when the attribution was recorded.
       - name: attribution_model
         description: The model used for attributing the order to the touchpoint.
-    config:
-      meta:
-        glean:
-          cols:
-            - id: row_count
-              type: metric
-              name: Order Attribution Records
-              aggregate: row_count
+    meta:
+      glean:
+        cols:
+          - id: row_count
+            type: metric
+            name: Order Attribution Records
+            aggregate: row_count
 
   - name: marketing_touchpoints
     description: This model describes each marketing touchpoint that leads to an order.
@@ -48,14 +47,13 @@ models:
         description: The time when the customer interacted with the touchpoint.
       - name: touchpoint_value
         description: The value assigned to the touchpoint.
-    config:
-      meta:
-        glean:
-          cols:
-            - id: row_count
-              type: metric
-              name: Order Attribution Records
-              aggregate: row_count
+    meta:
+      glean:
+        cols:
+          - id: row_count
+            type: metric
+            name: Order Attribution Records
+            aggregate: row_count
 
   - name: campaigns
     description: This model provides details about each marketing campaign.
@@ -75,11 +73,10 @@ models:
         description: End date of the campaign.
       - name: total_budget
         description: The total budget for the campaign.
-    config:
-      meta:
-        glean:
-          cols:
-            - id: row_count
-              type: metric
-              name: Order Attribution Records
-              aggregate: row_count
+    meta:
+      glean:
+        cols:
+          - id: row_count
+            type: metric
+            name: Order Attribution Records
+            aggregate: row_count

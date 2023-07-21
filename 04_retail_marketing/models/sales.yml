@@ -9,9 +9,6 @@ models:
         tests:
           - unique
           - not_null
-        meta:
-          glean:
-            primaryKey: true
       - name: customer_id
         description: unique ID for a customer
       - name: order_id
@@ -45,14 +42,13 @@ models:
               binsEnabled: false
       - name: timestamp
         description: the time the order was created
-    config:
-      meta:
-        glean:
-          cols:
-            - id: row_count
-              type: metric
-              name: Pizza Orders
-              aggregate: row_count
+    meta:
+      glean:
+        cols:
+          - id: row_count
+            type: metric
+            name: Pizza Orders
+            aggregate: row_count
 
   - name: orders
     description: order information
@@ -70,14 +66,13 @@ models:
         description: boolean, is it delivery
       - name: type
         description: whether the order is a subscription order 
-    config:
-        meta:
-          glean:
-            cols:
-              - id: row_count
-                type: metric
-                name: Pizza Orders
-                aggregate: row_count
+    meta:
+      glean:
+        cols:
+          - id: row_count
+            type: metric
+            name: Pizza Orders
+            aggregate: row_count
 
   - name: products
     description: order information
@@ -98,14 +93,13 @@ models:
             aggregationOptions:
               defaultBinWidth: 1
               binsEnabled: true
-    config:
-        meta:
-          glean:
-            cols:
-              - id: row_count
-                type: metric
-                name: Product Count
-                aggregate: row_count
+    meta:
+      glean:
+        cols:
+          - id: row_count
+            type: metric
+            name: Product Count
+            aggregate: row_count
 
 
   - name: customers
@@ -131,11 +125,10 @@ models:
         description: The phone number of the customer.
         tests:
           - not_null
-    config:
-        meta:
-          glean:
-            cols:
-              - id: row_count
-                type: metric
-                name: Customer Count
-                aggregate: row_count
+    meta:
+      glean:
+        cols:
+          - id: row_count
+            type: metric
+            name: Customer Count
+            aggregate: row_count
