@@ -4,7 +4,6 @@
 
 ## Usage
 
-Complete set of steps to get this working
 ``` bash
 git clone https://github.com/gleannyc/examples.git
 
