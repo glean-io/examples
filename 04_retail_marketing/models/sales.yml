@@ -1,0 +1,134 @@
+version: 2
+
+models:
+  - name: sales
+    description: sales has a record for each customer, order, product combination
+    columns:
+      - name: line_id
+        description: unique value for each line
+        tests:
+          - unique
+          - not_null
+      - name: customer_id
+        description: unique ID for a customer
+      - name: order_id
+        description: order id
+        meta:
+          glean:
+            aggregationOptions:
+              binsEnabled: false
+      - name: line_number
+        description: which line number; values from 1 to 5
+        meta:
+          glean:
+            aggregationOptions:
+              defaultBinWidth: 1
+              binsEnabled: false
+      - name: product_id
+        description: allows us to join to the products table
+      - name: order_value
+        description: order value - this is just for this line
+        meta:
+          glean:
+            aggregationOptions:
+              defaultBinWidth: 0.5
+              binsEnabled: false
+      - name: quantity
+        description: number of pizzas
+        meta:
+          glean:
+            aggregationOptions:
+              defaultBinWidth: 1
+              binsEnabled: false
+      - name: timestamp
+        description: the time the order was created
+    meta:
+      glean:
+        cols:
+          - id: row_count
+            type: metric
+            name: Pizza Orders
+            aggregate: row_count
+
+  - name: orders
+    description: order information
+    columns:
+      - name: order_id
+        description: order id
+        meta:
+          glean:
+            aggregationOptions:
+              binsEnabled: false
+            primaryKey: true
+      - name: payment_method
+        description: credit or cash
+      - name: delivery
+        description: boolean, is it delivery
+      - name: type
+        description: whether the order is a subscription order 
+    meta:
+      glean:
+        cols:
+          - id: row_count
+            type: metric
+            name: Pizza Orders
+            aggregate: row_count
+
+  - name: products
+    description: order information
+    columns:
+      - name: product_id
+        description: the unique identifier of the product
+        meta:
+          glean:
+            primaryKey: true
+      - name: pizza_size
+        description: pizza size; small, medium or large
+      - name: pizza_type
+        description: the type of pizza
+      - name: price
+        description: price in USD per pizza
+        meta:
+          glean:
+            aggregationOptions:
+              defaultBinWidth: 1
+              binsEnabled: true
+    meta:
+      glean:
+        cols:
+          - id: row_count
+            type: metric
+            name: Product Count
+            aggregate: row_count
+
+
+  - name: customers
+    description: This table contains customer information.
+    columns:
+      - name: customer_id
+        description: The unique identifier for the customer.
+        tests:
+          - unique
+          - not_null
+        meta:
+          glean:
+            primaryKey: true
+      - name: name
+        description: The name of the customer.
+        tests:
+          - not_null
+      - name: address
+        description: The address of the customer.
+        tests:
+          - not_null
+      - name: phone_number
+        description: The phone number of the customer.
+        tests:
+          - not_null
+    meta:
+      glean:
+        cols:
+          - id: row_count
+            type: metric
+            name: Customer Count
+            aggregate: row_count
