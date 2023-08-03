@@ -11,6 +11,10 @@ models:
           - not_null
       - name: customer_id
         description: unique ID for a customer
+        meta:
+          glean:
+            foreignModels:
+              - m::customers
       - name: order_id
         description: order id
         meta:
@@ -44,6 +48,7 @@ models:
         description: the time the order was created
     meta:
       glean:
+        alias: sales
         cols:
           - id: row_count
             type: metric
@@ -95,6 +100,7 @@ models:
               binsEnabled: true
     meta:
       glean:
+        alias: products
         cols:
           - id: row_count
             type: metric
@@ -127,6 +133,7 @@ models:
           - not_null
     meta:
       glean:
+        alias: customers
         cols:
           - id: row_count
             type: metric
