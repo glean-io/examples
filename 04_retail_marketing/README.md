@@ -1,10 +1,10 @@
-# Glean Marketing and Retail example using dbt + duckdb 
+# Glean Marketing and Retail example using dbt + duckdb
 
 [Glean](https://glean.io) supports defining models, views, and dashboards as code, which can then be deployed to your project using [DataOps](https://docs.glean.io/docs/data-ops/). This repository contains some examples to help you get started. You can see and explore a live demo of these resources at: https://demo.glean.io
 
 ## Usage
 
-``` bash
+```bash
 git clone https://github.com/gleannyc/examples.git
 
 cd 04_retail_marketing
@@ -29,7 +29,6 @@ dbt build
 # you can upload the files in data manually, or progromatically
 for file in ./data/dbt/*; do glean upload Uploads "$$file"; done
 
-# run glean:
-glean preview --dbt
+# deploy to glean (this will modify your project):
+glean deploy --dbt --no-preview
 ```
-
