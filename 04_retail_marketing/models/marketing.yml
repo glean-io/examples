@@ -11,8 +11,16 @@ models:
             primaryKey: true
       - name: order_id
         description: Order ID, matches the order_id in the sales model.
+        meta:
+          glean:
+            foreignModels:
+              - m::orders
       - name: touchpoint_id
         description: ID of the marketing touchpoint which led to the order.
+        meta:
+          glean:
+            foreignModels:
+              - m::marketing_touchpoints
       - name: attribution_share
         description: Proportional credit given to this touchpoint for the order.
       - name: attribution_timestamp
@@ -21,6 +29,7 @@ models:
         description: The model used for attributing the order to the touchpoint.
     meta:
       glean:
+        alias: order_attribution
         cols:
           - id: row_count
             type: metric
@@ -49,6 +58,7 @@ models:
         description: The value assigned to the touchpoint.
     meta:
       glean:
+        alias: marketing_touchpoints
         cols:
           - id: row_count
             type: metric
@@ -75,6 +85,7 @@ models:
         description: The total budget for the campaign.
     meta:
       glean:
+        alias: campaigns
         cols:
           - id: row_count
             type: metric

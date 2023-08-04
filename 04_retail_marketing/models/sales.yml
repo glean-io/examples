@@ -19,6 +19,8 @@ models:
         description: order id
         meta:
           glean:
+            foreignModels:
+              - m::orders
             aggregationOptions:
               binsEnabled: false
       - name: line_number
@@ -34,6 +36,8 @@ models:
         description: order value - this is just for this line
         meta:
           glean:
+            foreignModels:
+              - m::products
             aggregationOptions:
               defaultBinWidth: 0.5
               binsEnabled: false
@@ -46,6 +50,12 @@ models:
               binsEnabled: false
       - name: timestamp
         description: the time the order was created
+        meta:
+          glean:
+            aggregationOptions:
+              minGranularity: week
+              maxGranularity: year
+
     meta:
       glean:
         alias: sales
@@ -73,6 +83,7 @@ models:
         description: whether the order is a subscription order 
     meta:
       glean:
+        alias: orders
         cols:
           - id: row_count
             type: metric
