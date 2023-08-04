@@ -55,7 +55,6 @@ models:
             aggregationOptions:
               minGranularity: week
               maxGranularity: year
-
     meta:
       glean:
         alias: sales
