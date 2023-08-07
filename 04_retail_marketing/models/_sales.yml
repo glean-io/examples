@@ -32,12 +32,14 @@ models:
               binsEnabled: false
       - name: product_id
         description: allows us to join to the products table
-      - name: order_value
-        description: order value - this is just for this line
         meta:
           glean:
             foreignModels:
               - m::products
+      - name: order_value
+        description: order value - this is just for this line
+        meta:
+          glean:
             aggregationOptions:
               defaultBinWidth: 0.5
               binsEnabled: false
@@ -52,17 +54,88 @@ models:
         description: the time the order was created
         meta:
           glean:
+            primaryDate: true
             aggregationOptions:
               minGranularity: week
               maxGranularity: year
     meta:
       glean:
         alias: sales
+        #defaultExploration:
+          #attributesTray:
+            #- m:a7a144cc-a534-385c-8eca-7fdc43e06839/delivery
+            #- m:a7a144cc-a534-385c-8eca-7fdc43e06839/type
+            #- m:a7a144cc-a534-385c-8eca-7fdc43e06839/payment_method
+            #- m:30581eff-f87b-371c-8269-ebf0c7943cd7/pizza_type
+            #- m:30581eff-f87b-371c-8269-ebf0c7943cd7/pizza_size
+            #- quantity
+            #- m:30581eff-f87b-371c-8269-ebf0c7943cd7/price
+            #- m:2d2d373f-994e-3421-aaa7-59023f9c09ac/name
+            #- m:2d2d373f-994e-3421-aaa7-59023f9c09ac/address
+            #- m:2d2d373f-994e-3421-aaa7-59023f9c09ac/phone_number
+            #- line_id
+            #- customer_id
+            #- order_id
+            #- line_number
+            #- product_id
+            #- order_value
+            #- m:a7a144cc-a534-385c-8eca-7fdc43e06839/order_id
+            #- m:30581eff-f87b-371c-8269-ebf0c7943cd7/product_id
+            #- m:2d2d373f-994e-3421-aaa7-59023f9c09ac/customer_id
         cols:
-          - id: row_count
+          #- id: row_count
+            #type: metric
+            #name: Pizza Orders
+            #aggregate: row_count
+          - id: revenue
             type: metric
-            name: Pizza Orders
-            aggregate: row_count
+            name: Revenue
+            description: "revenue is the total sales of pizza. synonyms: sales, top line"
+            physicalName: order_value
+            aggregate: sum
+            formattingOptions:
+              fixedDecimals: 0
+              formatAsDollars: true
+          - id: revenue_per_customer
+            type: metric
+            name: Revenue per customer
+            sql: sum(order_value) / count(distinct customer_id)
+            formattingOptions:
+              fixedDecimals: 2
+              formatAsDollars: true
+          - id: revenue_per_order
+            type: metric
+            name: Revenue per order
+            description: "revenue is the total sales of pizza, synonyms: sales, top line"
+            sql: sum(order_value) / count(distinct order_id)
+            formattingOptions:
+              fixedDecimals: 2
+              formatAsDollars: true
+          - id: average_unit_price
+            type: metric
+            name: Avg unit price
+            description: "revenue is the total sales of pizza, synonyms: sales, top line"
+            sql: sum(order_value) / sum(quantity)
+            formattingOptions:
+              fixedDecimals: 0
+              formatAsDollars: true
+          - id: num_customers
+            type: metric
+            name: Number of customers
+            physicalName: customer_id
+            aggregate: count_distinct
+          - id: num_orders
+            type: metric
+            name: Number of orders
+            physicalName: order_id
+            aggregate: count_distinct
+          - id: orders_per_customer
+            type: metric
+            name: Orders per customer
+            sql: count(order_id) / count(distinct customer_id)
+            formattingOptions:
+              fixedDecimals: 2
+
 
   - name: orders
     description: order information
