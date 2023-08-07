@@ -1,0 +1,103 @@
+glean: '1.0'
+name: Revenue Run Rate Dashboard
+description: ''
+alias: ''
+type: dashboard
+globalFilters: []
+sections:
+- filters: []
+  rows:
+  - blocks:
+    - type: markdown
+      text: '## Last Month Metrics'
+      width: 12
+  - blocks:
+    - type: metric
+      metricDisplayOption: relativeAggregate
+      dataModel: dbt::model.retail_example.sales
+      dataModelMetricId: num_customers
+      filters:
+      - columnId: timestamp
+        lt:
+        - 0
+        - month
+        - startOfPeriod: true
+      label: ''
+      ignoreDashboardFilters: false
+      width: 3
+      comparisonAttributeId: timestamp
+      period: month
+      difference:
+        showDifference: true
+      sparkline:
+        display: line
+    - type: metric
+      metricDisplayOption: relativeAggregate
+      dataModel: dbt::model.retail_example.sales
+      dataModelMetricId: revenue
+      filters:
+      - columnId: timestamp
+        lt:
+        - 0
+        - month
+        - startOfPeriod: true
+      label: ''
+      ignoreDashboardFilters: false
+      width: 3
+      comparisonAttributeId: timestamp
+      period: month
+      difference:
+        showDifference: true
+      sparkline:
+        display: line
+    - type: metric
+      metricDisplayOption: relativeAggregate
+      dataModel: dbt::model.retail_example.sales
+      dataModelMetricId: revenue_per_order
+      filters:
+      - columnId: timestamp
+        lt:
+        - 0
+        - month
+        - startOfPeriod: true
+      label: ''
+      ignoreDashboardFilters: false
+      width: 3
+      comparisonAttributeId: timestamp
+      period: month
+      difference:
+        showDifference: true
+      sparkline:
+        display: line
+    - type: metric
+      metricDisplayOption: relativeAggregate
+      dataModel: dbt::model.retail_example.sales
+      dataModelMetricId: revenue_per_order
+      filters:
+      - columnId: timestamp
+        lt:
+        - 0
+        - month
+        - startOfPeriod: true
+      label: ''
+      ignoreDashboardFilters: false
+      width: 3
+      comparisonAttributeId: timestamp
+      period: month
+      difference:
+        showDifference: true
+      sparkline:
+        display: line
+    height: 4
+  - blocks:
+    - type: savedView
+      savedView: sv:TMPMOhMFdDeqfFfj
+      legendPosition: none
+      ignoreDashboardFilters: false
+      width: 6
+    - type: savedView
+      savedView: sv:10stohVWbLpKWJsj
+      legendPosition: none
+      ignoreDashboardFilters: false
+      width: 6
+    height: 6
