@@ -140,7 +140,7 @@ models:
   - name: orders
     description: order information
     columns:
-      - name: order_id
+      - name: id
         description: order id
         meta:
           glean:
@@ -165,7 +165,7 @@ models:
   - name: products
     description: order information
     columns:
-      - name: product_id
+      - name: id
         description: the unique identifier of the product
         meta:
           glean:
@@ -194,7 +194,7 @@ models:
   - name: customers
     description: This table contains customer information.
     columns:
-      - name: customer_id
+      - name: id
         description: The unique identifier for the customer.
         tests:
           - unique

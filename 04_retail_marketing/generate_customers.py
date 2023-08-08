@@ -12,9 +12,7 @@ df = pd.read_parquet(parquet_file_path)
 customer_ids = df["customer_id"].unique()
 
 # Step 3: Create the customers table
-customers_table = pd.DataFrame(
-    columns=["customer_id", "name", "address", "phone_number"]
-)
+customers_table = pd.DataFrame(columns=["id", "name", "address", "phone_number"])
 
 # Step 4: Populate the customers table
 for customer_id in customer_ids:
@@ -30,7 +28,7 @@ for customer_id in customer_ids:
             pd.DataFrame(
                 [
                     {
-                        "customer_id": customer_id,
+                        "id": customer_id,
                         "name": name,
                         "address": address,
                         "phone_number": phone_number,

@@ -1,5 +1,5 @@
 select 
-  hash("pizza_type" || "pizza_shape" || "pizza_size" ) as "product_id",
+  hash("pizza_type" || "pizza_shape" || "pizza_size" ) as "id",
   "pizza_size",
   "pizza_shape",
   "pizza_type",
