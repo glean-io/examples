@@ -74,7 +74,7 @@ models:
           - id: revenue_per_customer
             type: metric
             name: Revenue per customer
-            sql: sum(order_value) / count(distinct customer_id)
+            sql: sum(sales.order_value) / count(distinct sales.customer_id)
             formattingOptions:
               fixedDecimals: 2
               formatAsDollars: true
@@ -82,7 +82,7 @@ models:
             type: metric
             name: Revenue per order
             description: "revenue is the total sales of pizza, synonyms: sales, top line"
-            sql: sum(order_value) / count(distinct order_id)
+            sql: sum(sales.order_value) / count(distinct sales.order_id)
             formattingOptions:
               fixedDecimals: 2
               formatAsDollars: true
@@ -107,7 +107,7 @@ models:
           - id: orders_per_customer
             type: metric
             name: Orders per customer
-            sql: count(order_id) / count(distinct customer_id)
+            sql: count(sales.order_id) / count(distinct sales.customer_id)
             formattingOptions:
               fixedDecimals: 2
 
