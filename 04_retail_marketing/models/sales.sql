@@ -1,7 +1,7 @@
 select 
-  hash("order_id" || '_' || "line_number") as "line_id",
+  hash("order_id" || '_' || "item_number") as "item_id",
   "order_id",
-  "line_number",
+  "item_number",
   hash("pizza_type" || "pizza_shape" || "pizza_size" ) as "product_id",
   "quantity",
   "customer_id",

@@ -4,7 +4,7 @@ models:
   - name: sales
     description: sales has a record for each customer, order, product combination
     columns:
-      - name: line_id
+      - name: item_id
         description: unique value for each line
         tests:
           - unique
@@ -23,8 +23,8 @@ models:
               - m::orders
             aggregationOptions:
               binsEnabled: false
-      - name: line_number
-        description: which line number; values from 1 to 5
+      - name: item_number
+        description: an item sequence number within this order; values from 1 to 5
         meta:
           glean:
             aggregationOptions:
@@ -37,7 +37,7 @@ models:
             foreignModels:
               - m::products
       - name: order_value
-        description: order value - this is just for this line
+        description: order value - this is just for this product
         meta:
           glean:
             aggregationOptions:
@@ -61,36 +61,11 @@ models:
     meta:
       glean:
         alias: sales
-        #defaultExploration:
-          #attributesTray:
-            #- m:a7a144cc-a534-385c-8eca-7fdc43e06839/delivery
-            #- m:a7a144cc-a534-385c-8eca-7fdc43e06839/type
-            #- m:a7a144cc-a534-385c-8eca-7fdc43e06839/payment_method
-            #- m:30581eff-f87b-371c-8269-ebf0c7943cd7/pizza_type
-            #- m:30581eff-f87b-371c-8269-ebf0c7943cd7/pizza_size
-            #- quantity
-            #- m:30581eff-f87b-371c-8269-ebf0c7943cd7/price
-            #- m:2d2d373f-994e-3421-aaa7-59023f9c09ac/name
-            #- m:2d2d373f-994e-3421-aaa7-59023f9c09ac/address
-            #- m:2d2d373f-994e-3421-aaa7-59023f9c09ac/phone_number
-            #- line_id
-            #- customer_id
-            #- order_id
-            #- line_number
-            #- product_id
-            #- order_value
-            #- m:a7a144cc-a534-385c-8eca-7fdc43e06839/order_id
-            #- m:30581eff-f87b-371c-8269-ebf0c7943cd7/product_id
-            #- m:2d2d373f-994e-3421-aaa7-59023f9c09ac/customer_id
         cols:
-          #- id: row_count
-            #type: metric
-            #name: Pizza Orders
-            #aggregate: row_count
           - id: revenue
             type: metric
             name: Revenue
-            description: "revenue is the total sales of pizza. synonyms: sales, top line"
+            description: "revenue is the total sales of pizza. synonyms: sales, top line revenue"
             physicalName: order_value
             aggregate: sum
             formattingOptions:
@@ -153,6 +128,17 @@ models:
         description: boolean, is it delivery
       - name: type
         description: whether the order is a subscription order 
+      - name: customer_id
+      - name: loyalty_status
+      - name: discount_code
+      - name: feedback_rating
+      - name: delivery_time
+      - name: preparation_time
+      #- name: allergens
+      - name: special_request
+      - name: referral_source
+      - name: cook_id
+      - name: location_id
     meta:
       glean:
         alias: orders

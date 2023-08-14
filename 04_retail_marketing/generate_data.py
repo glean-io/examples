@@ -4,9 +4,7 @@ from faker import Faker
 import pandas as pd
 import random
 from random import randint
-from datetime import datetime
-from datetime import date
-from datetime import timedelta
+from datetime import datetime, date, timedelta
 import math
 import os
 
@@ -15,7 +13,7 @@ fake = Faker()
 
 # Define the possible values for pizza types and payment methods
 pizza_types = ["Margherita", "Pepperoni", "Vodka", "Veggie", "Custom"]
-pizza_topings = [
+pizza_toppings = [
     "Pepperoni",
     "Mushrooms",
     "Onions",
@@ -27,6 +25,23 @@ pizza_topings = [
     "Spinach",
 ]
 payment_methods = ["Cash", "Credit Card", "Debit Card", "Online Payment"]
+
+# New constants
+loyalty_statuses = ["Yes", "No", "Gold Member", "Silver Member"]
+discount_codes = [None, "SUMMER21", "FIRSTORDER", "FREESHIP"]
+referral_sources = ["Google", "Word of Mouth", "Social Media", "Advertisement"]
+allergens_map = {
+    "Mozzarella": ["Dairy"],
+    "Basil": [],
+    "Olive oil": [],
+    "Pepperoni": ["Pork"],
+    "Mushrooms": [],
+    "Onions": [],
+    "Green peppers": [],
+    "Vodka sauce": ["Dairy", "Alcohol"]
+    # ... (and so on for all toppings)
+}
+special_requests = [None, "Extra spicy", "Crust well-done", "Low cheese"]
 
 
 def get_toppings(pizza_type):
@@ -40,7 +55,6 @@ def get_toppings(pizza_type):
         toppings = ["Mozzarella", "Mushrooms", "Onions", "Green peppers"]
     else:
         toppings = []
-
     return toppings
 
 
@@ -106,7 +120,6 @@ def get_price(pizza_type, pizza_size, pizza_shape):
     return base_price * multiplier * shape_multiplier
 
 
-# Define a function to generate a row of data
 def generate_data(order_id, customer_id=None, timestamp=None, type=None):
     # Generate a timestamp
     if timestamp is None:
@@ -157,10 +170,29 @@ def generate_data(order_id, customer_id=None, timestamp=None, type=None):
         pizza_shape = random.choices(["Round", "Square"], weights=[0.8, 0.2], k=1)[0]
         quantity = random.choices([1.0, 2.0], weights=[0.8, 0.2], k=1)[0]
 
+        loyalty_status = random.choice(loyalty_statuses)
+        discount_code = random.choice(discount_codes)
+        feedback_rating = (
+            randint(1, 5) if random.random() > 0.2 else None
+        )  # 20% chance no feedback
+        delivery_time = randint(20, 60)  # random time between 20 to 60 minutes
+        preparation_time = randint(10, 30)  # random time between 10 to 30 minutes
+        allergens = list(
+            set(
+                sum(
+                    [allergens_map[topping] for topping in get_toppings(pizza_type)], []
+                )
+            )
+        )
+        special_request = random.choice(special_requests)
+        referral_source = random.choice(referral_sources)
+        cook_id = f"C{randint(100, 999)}"  # Random cook ID like C101, C102, ...
+        location_id = f"L{randint(1, 5)}"  # Random location ID like L1, L2, ...
+
         rows.append(
             {
                 "order_id": order_id,
-                "line_number": _,
+                "item_number": _,
                 "timestamp": timestamp,
                 # generate uuid from the random number: https://stackoverflow.com/questions/41186895/how-to-generate-uuid-from-a-random-integer
                 "customer_id": customer_id,
@@ -175,15 +207,20 @@ def generate_data(order_id, customer_id=None, timestamp=None, type=None):
                 "payment_method": payment_method,
                 "delivery": delivery,
                 "type": type,
+                "loyalty_status": loyalty_status,
+                "discount_code": discount_code,
+                "feedback_rating": feedback_rating,
+                "delivery_time": delivery_time,
+                "preparation_time": preparation_time,
+                "allergens": allergens,
+                "special_request": special_request,
+                "referral_source": referral_source,
+                "cook_id": cook_id,
+                "location_id": location_id,
             }
         )
+
     return rows
-
-
-# Generate the data
-data = []
-for order_id in range(6350):
-    data.extend(generate_data(order_id, type="Single Order"))
 
 
 def generate_sub_timestamp(month, year):
@@ -198,6 +235,11 @@ def generate_sub_timestamp(month, year):
         dt.year, dt.month, dt.day, randint(0, 23), randint(0, 59), randint(0, 59)
     )
 
+
+# Generate the data
+data = []
+for order_id in range(6350):
+    data.extend(generate_data(order_id, type="Single Order"))
 
 # Generate data for subscription customers
 for customer_id in range(232):
@@ -222,13 +264,15 @@ for customer_id in range(232):
                 data.extend(generate_data(order_id, customer_id, t, "Subscription"))
 
 # # Create a pandas DataFrame
+
+
+# Create a pandas DataFrame
 df = pd.DataFrame(data)
 
 # Save to a CSV file
 # df.to_csv("fake_pizza_sales_data.csv", index=False)
 
-# # save to parquet file
-
+# Save to parquet file
 dir_name = os.path.dirname(os.path.realpath(__file__))
 file_path = os.path.join(dir_name, "data", "sales_data.parquet")
 df.to_parquet(file_path, index=False)
