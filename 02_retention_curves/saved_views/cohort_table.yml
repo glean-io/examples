@@ -1,6 +1,5 @@
 glean: "1.0"
 type: saved_view
-grn: sv:07fdf78d-0f43-3320-b3dc-612a57fdfedc
 model: m:b9eb3293-7875-3d23-b5b6-49a3cfaf4faf
 name: Active Users by Yearly Cohort
 data:
