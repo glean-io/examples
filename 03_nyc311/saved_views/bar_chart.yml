@@ -1,0 +1,15 @@
+glean: "1.0"
+type: saved_view
+model: m:b76d1af8-69c3-3870-bdd2-46cdb2cc14df
+name: Call Volume Over Time
+data:
+  x:
+    columnId: created_date
+    granularity: quarter
+  y:
+    columnId: row_count
+  filters: []
+visualization:
+  chartType: bar
+  showAxisLabels: true
+  missingValuesBehavior: show
