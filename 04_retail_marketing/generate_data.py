@@ -201,7 +201,7 @@ def generate_data(order_id, customer_id=None, timestamp=None, type=None):
                 "pizza_type": pizza_type,
                 "pizza_toppings": get_toppings(pizza_type),
                 "price": get_price(pizza_type, pizza_size, pizza_shape),
-                "order_value": get_price(pizza_type, pizza_size, pizza_shape)
+                "item_price": get_price(pizza_type, pizza_size, pizza_shape)
                 * float(quantity),
                 "quantity": quantity,
                 "payment_method": payment_method,

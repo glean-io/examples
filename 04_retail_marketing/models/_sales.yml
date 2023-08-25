@@ -31,12 +31,12 @@ models:
               defaultBinWidth: 1
               binsEnabled: false
       - name: product_id
-        description: allows us to join to the products table
+        description: allows us to join to the products table, synonyms sku
         meta:
           glean:
             foreignModels:
               - m::products
-      - name: order_value
+      - name: item_price
         description: order value - this is just for this product
         meta:
           glean:
@@ -66,7 +66,7 @@ models:
             type: metric
             name: Revenue
             description: "revenue is the total sales of pizza. synonyms: sales, top line revenue"
-            physicalName: order_value
+            physicalName: item_price
             aggregate: sum
             formattingOptions:
               fixedDecimals: 0
@@ -74,7 +74,7 @@ models:
           - id: revenue_per_customer
             type: metric
             name: Revenue per customer
-            sql: sum(sales.order_value) / count(distinct sales.customer_id)
+            sql: sum(sales.item_price) / count(distinct sales.customer_id)
             formattingOptions:
               fixedDecimals: 2
               formatAsDollars: true
@@ -82,7 +82,7 @@ models:
             type: metric
             name: Revenue per order
             description: "revenue is the total sales of pizza, synonyms: sales, top line"
-            sql: sum(sales.order_value) / count(distinct sales.order_id)
+            sql: sum(sales.item_price) / count(distinct sales.order_id)
             formattingOptions:
               fixedDecimals: 2
               formatAsDollars: true
@@ -90,7 +90,7 @@ models:
             type: metric
             name: Avg unit price
             description: "revenue is the total sales of pizza, synonyms: sales, top line"
-            sql: sum(order_value) / sum(quantity)
+            sql: sum(item_price) / sum(quantity)
             formattingOptions:
               fixedDecimals: 0
               formatAsDollars: true

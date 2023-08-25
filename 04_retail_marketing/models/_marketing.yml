@@ -1,7 +1,7 @@
 version: 2
 
 models:
-  - name: order_attribution
+  - name: marketing_attribution
     description: This model describes how each order is attributed to different marketing touchpoints.
     columns:
       - name: attribution_id
@@ -25,16 +25,28 @@ models:
         description: Proportional credit given to this touchpoint for the order.
       - name: attribution_timestamp
         description: The time when the attribution was recorded.
+      - name: campaign_id
+        meta:
+          glean:
+            foreignModels:
+              - m::campaigns
       - name: attribution_model
         description: The model used for attributing the order to the touchpoint.
     meta:
       glean:
-        alias: order_attribution
+        alias: marketing_attribution
         cols:
           - id: row_count
             type: metric
             name: Order Attribution Records
             aggregate: row_count
+          - id: attributable_revenue
+            type: metric
+            name: Attributable Revenue
+            formattingOptions:
+              fixedDecimals: 0
+              formatAsDollars: true
+            sql: sum(orders.total_order_value * marketing_attribution.attribution_share)
 
   - name: marketing_touchpoints
     description: This model describes each marketing touchpoint that leads to an order.
@@ -56,6 +68,7 @@ models:
         description: The time when the customer interacted with the touchpoint.
       - name: touchpoint_value
         description: The value assigned to the touchpoint.
+      - name: cost_per_touchpoint
     meta:
       glean:
         alias: marketing_touchpoints
