@@ -23,6 +23,10 @@ models:
               - m::marketing_touchpoints
       - name: attribution_share
         description: Proportional credit given to this touchpoint for the order.
+      - name: order_timestamp
+        meta:
+          glean:
+            primaryDate: true
       - name: attribution_timestamp
         description: The time when the attribution was recorded.
       - name: campaign_id
