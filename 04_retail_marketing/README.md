@@ -5,9 +5,9 @@
 ## Usage
 
 ```bash
-git clone https://github.com/gleannyc/examples.git
+git clone https://github.com/glean-io/examples.git
 
-cd 04_retail_marketing
+cd examples/04_retail_marketing
 
 # with python 2.9+
 pip install -r requirements.txt
@@ -30,5 +30,5 @@ dbt build
 for file in ./data/dbt/*; do glean upload Uploads "$$file"; done
 
 # deploy to glean (this will modify your project):
-glean deploy --dbt --no-preview
+hb deploy --dbt --no-preview
 ```
