@@ -7,7 +7,7 @@
 ```bash
 git clone https://github.com/gleannyc/examples.git
 
-cd 04_retail_marketing
+cd examples/04_retail_marketing
 
 # with python 2.9+
 pip install -r requirements.txt
