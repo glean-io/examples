@@ -30,5 +30,5 @@ dbt build
 for file in ./data/dbt/*; do glean upload Uploads "$$file"; done
 
 # deploy to glean (this will modify your project):
-glean deploy --dbt --no-preview
+hb deploy --dbt --no-preview
 ```
