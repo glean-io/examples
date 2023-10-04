@@ -5,7 +5,7 @@
 ## Usage
 
 ```bash
-git clone https://github.com/gleannyc/examples.git
+git clone https://github.com/glean-io/examples.git
 
 cd examples/04_retail_marketing
 
